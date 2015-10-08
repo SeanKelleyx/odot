@@ -38,6 +38,17 @@ class TodoItemsController < ApplicationController
   	end
   end
 
+  def destroy
+    @todo_item = @todo_list.todo_item.find(params[:id])
+    if @todo_item.present?
+      @todo_item.destroy
+    end
+    respond_to do |format|
+      format.html { redirect_to todo_list_todo_items_path, notice: 'Todo list item was successfully deleted.' }
+      format.json { head :no_content }
+    end
+  end
+
   private 
   def find_todo_list
     @todo_list = TodoList.find(params[:todo_list_id])
