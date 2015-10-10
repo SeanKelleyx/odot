@@ -4,14 +4,6 @@ describe "Adding todo items" do
   let!(:todo_list){TodoList.create(title: "Groceries", description: "Grocery list.")}
   let!(:todo_item){todo_list.todo_item.create(content: "Milk")}
 
-  def visit_todo_list(list)
-    visit "/todo_lists"
-
-    within "#todo_list_#{list.id}" do
-      click_link "List Items"
-    end
-  end
-
   def edit_todo_item(options={})
     options[:content] ||= "Lots of milk"
     
