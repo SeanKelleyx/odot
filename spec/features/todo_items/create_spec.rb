@@ -15,7 +15,7 @@ describe "Adding todo items" do
 		visit_todo_list(todo_list)
 		create_todo_item
 		expect(page).to have_content("Added todo list item.")
-		within "ul.todo_items" do 
+		within ".todo_items" do 
 			expect(page).to have_content("Milk")
 		end
 	end
