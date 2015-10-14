@@ -5,8 +5,11 @@ RSpec.describe User, type: :model do
   let(:valid_attributes){{
     first_name: "Sean",
     last_name: "Kelley",
-    email: "s.kelley27@gmail.com"
+    email: "s.kelley27@gmail.com",
+    password: "securepass1234",
+    password_confirmation: "securepass1234"
   }}
+
   context "validations" do 
     let(:user) {User.new(valid_attributes)}
 
@@ -26,6 +29,12 @@ RSpec.describe User, type: :model do
       user.email = "S.KELLEY27@GMAIL.COM"
       expect(user).to validate_uniqueness_of(:email)
     end    
+
+    it "requires the email address to look like an email address" do
+      user.email = "Sean" 
+      expect(user).to_not be_valid
+    end
+
   end
 
   context "#downcase_email" do

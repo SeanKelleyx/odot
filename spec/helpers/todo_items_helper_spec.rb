@@ -24,5 +24,5 @@ def dom_id_for(model)
 end
 
 RSpec.describe TodoItemsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+ 
 end
