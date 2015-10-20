@@ -49,6 +49,11 @@ RSpec.describe UserSessionsController, type: :controller do
         post_to_create
         expect(flash[:success]).to eq("Thank you for logging in!")
       end
+
+      it "sets the session User_id to the created user" do
+        post_to_create
+        expect(session[:user_id]).to eq(User.find_by(email: "name@domain.com").id)
+      end
     end
 
     shared_examples_for "denied login" do 
