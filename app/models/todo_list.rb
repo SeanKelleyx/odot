@@ -1,5 +1,6 @@
 class TodoList < ActiveRecord::Base
 	has_many :todo_item
+  belongs_to :user
 
 	validates :title, presence: true
 	validates :title, length: {minimum: 3}
