@@ -37,9 +37,10 @@ RSpec.describe TodoListsController, type: :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # TodoListsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+  let(:user) {create(:user)}
 
   before do 
-    allow(controller).to receive(:current_user).and_return(build_stubbed(:user))
+    allow(controller).to receive(:current_user).and_return(user)
   end
 
   describe "GET #index" do
@@ -102,6 +103,12 @@ RSpec.describe TodoListsController, type: :controller do
       it "redirects to the created todo_list" do
         post :create, {:todo_list => valid_attributes}, valid_session
         expect(response).to redirect_to(TodoList.last)
+      end
+
+      it "creates todo list for logged in user"  do
+        post :create, {:todo_list => valid_attributes}, valid_session
+        todo_list = TodoList.last
+        expect(todo_list.user).to eq(user)
       end
     end
     context "with invalid params" do
