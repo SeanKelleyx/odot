@@ -3,6 +3,10 @@ require 'spec_helper'
 describe "Viewing todo items" do
 	let!(:todo_list){TodoList.create(title: "Groceries", description: "Grocery list.")}
 
+	before do
+    sign_in create(:user), password: "tester1"
+  end
+
 	it "displays the list title on list items page" do 
 		visit_todo_list(todo_list)
 		within("h1.title_header") do

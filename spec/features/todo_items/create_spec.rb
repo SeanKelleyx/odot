@@ -11,6 +11,10 @@ describe "Adding todo items" do
 		click_button "Save"
 	end
 
+  before do
+    sign_in create(:user), password: "tester1"
+  end
+
 	it "is successful with valid content" do 
 		visit_todo_list(todo_list)
 		create_todo_item

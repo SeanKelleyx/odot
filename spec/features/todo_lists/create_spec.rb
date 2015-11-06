@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative 'helper'
 
 describe "Creating todo lists" do 
 
@@ -13,6 +14,10 @@ describe "Creating todo lists" do
 		fill_in "Title", with: options[:title]
 		fill_in "Description", with: options[:description]
 		click_button "Create Todo list"
+	end
+
+	before do
+		sign_in create(:user), password: "tester1"
 	end
 
 	it "redirects to the todo list index page on success" do

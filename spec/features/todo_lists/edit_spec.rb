@@ -19,6 +19,10 @@ describe "Editing todo lists" do
 		todo_list.reload
 	end
 
+	before do
+		sign_in create(:user), password: "tester1"
+	end
+
 	it "updates a todo list item successfully with correct information" do
 		edit_todo_list
 		

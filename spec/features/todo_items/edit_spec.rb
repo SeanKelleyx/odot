@@ -14,6 +14,10 @@ describe "Adding todo items" do
     click_button "Save"
   end
 
+  before do
+    sign_in create(:user), password: "tester1"
+  end
+
   it "edit spec is successful when content is valid" do 
     visit_todo_list todo_list
     edit_todo_item
