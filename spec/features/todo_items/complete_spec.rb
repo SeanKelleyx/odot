@@ -2,12 +2,12 @@ require 'spec_helper'
 require 'rails_helper'
 
 describe "Completing todo items" do
-  let!(:current_user){User.new}
-  let!(:todo_list){TodoList.create(title: "Groceries", description: "Grocery list.")}
+  let!(:user){create(:user)}
+  let!(:todo_list){user.todo_lists.create(title: "Groceries", description: "Grocery list.")}
   let!(:todo_item){todo_list.todo_item.create(content: "Milk")}
 
   before do
-    sign_in create(:user), password: "tester1"
+    sign_in user, password: "tester1"
   end
 
   it "is successful when marking a single item complete" do

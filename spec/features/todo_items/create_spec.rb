@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe "Adding todo items" do
-	let!(:todo_list){TodoList.create(title: "Groceries", description: "Grocery list.")}
+  let(:user){create(:user)}
+	let!(:todo_list){user.todo_lists.create(title: "Groceries", description: "Grocery list.")}
 
 	def create_todo_item(options={})
 		options[:content] ||= "Milk"
@@ -12,7 +13,7 @@ describe "Adding todo items" do
 	end
 
   before do
-    sign_in create(:user), password: "tester1"
+    sign_in user, password: "tester1"
   end
 
 	it "is successful with valid content" do 

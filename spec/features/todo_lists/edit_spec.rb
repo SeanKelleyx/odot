@@ -1,7 +1,9 @@
 require 'spec_helper'
+require_relative 'helper'
 
 describe "Editing todo lists" do 
-	let!(:todo_list){TodoList.create(title: "Groceries", description: "Grocery list.")}
+	let(:user){ create(:user) }
+	let!(:todo_list){ user.todo_lists.create(title: "Groceries", description: "Grocery list.")}
 
 	def edit_todo_list(options={})
 		options[:title] ||= "New Title"
@@ -20,7 +22,7 @@ describe "Editing todo lists" do
 	end
 
 	before do
-		sign_in create(:user), password: "tester1"
+		sign_in user, password: "tester1"
 	end
 
 	it "updates a todo list item successfully with correct information" do
