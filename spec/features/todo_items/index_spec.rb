@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 describe "Viewing todo items" do
-	let(:user){create(:user)}
-	let!(:todo_list){user.todo_lists.create(title: "Groceries", description: "Grocery list.")}
+	let!(:todo_list){create(:todo_list)}
 
 	before do
-    sign_in user, password: "tester1"
+    sign_in todo_list.user, password: "tester1"
   end
 
 	it "displays the list title on list items page" do 

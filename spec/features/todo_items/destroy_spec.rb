@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe "Deleting todo items" do
-  let(:user){create(:user)}
-  let!(:todo_list){user.todo_lists.create(title: "Groceries", description: "Grocery list.")}
+  let!(:todo_list){create(:todo_list)}
   let!(:todo_item){todo_list.todo_item.create(content: "Milk")}
 
   before do
-    sign_in user, password: "tester1"
+    sign_in todo_list.user, password: "tester1"
   end
 
   it "deleting todo list items is successfull" do
