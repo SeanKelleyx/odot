@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "/logout" => "user_sessions#destroy", as: :logout
   
   resources :user_sessions, only: [:new,:create]
-  resources :password_resets, only: [:new, :create]
+  resources :password_resets, only: [:new, :create, :edit]
 
   resources :users
   resources :todo_lists do 
