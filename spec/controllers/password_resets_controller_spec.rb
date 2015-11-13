@@ -58,13 +58,53 @@ RSpec.describe PasswordResetsController, type: :controller do
     end
 
     context "with no password_reset_token" do
-      let(:user){create(:user)}
-      before {user.generate_password_reset_token!}
 
       it "renders the 404 page" do 
         get :edit, id: ""
         expect(response.status).to eq(404)
         expect(response).to render_template(file: "#{Rails.root}/public/404.html")
+      end
+    end
+  end
+
+  describe "PATCH update" do
+    context "with no token found" do 
+      it "renders the edit page" do
+        patch :update, id: "notfound", user: {password: "newpass", password_confirmation: "newpass"}
+        expect(response).to render_template("edit")
+      end
+      it "sets the flash message" do 
+        patch :update, id: "notfound", user: {password: "newpass", password_confirmation: "newpass"}
+        expect(flash[:error]).to have_content("Password reset token not found")
+      end
+    end
+
+    context "with token found" do 
+      let(:user){create(:user)}
+      before {user.generate_password_reset_token!}
+
+      it "updates the users password" do
+        digest = user.password_digest
+        patch :update, id: user.password_reset_token, user: {password: "newpass", password_confirmation: "newpass"}
+        user.reload
+        expect(user.password_digest).to_not eq(digest)
+      end
+
+      it "updates the user password_reset_token" do 
+        token = user.password_reset_token
+        patch :update, id: user.password_reset_token, user: {password: "newpass", password_confirmation: "newpass"}
+        user.reload
+        expect(user.password_reset_token).to_not eq(token)
+      end
+
+      it "displays message" do 
+        patch :update, id: user.password_reset_token, user: {password: "newpass", password_confirmation: "newpass"}
+        expect(flash[:success]).to have_content("Password updated.")
+      end
+
+      it "loggs the user in by setting the session user id" do 
+        patch :update, id: user.password_reset_token, user: {password: "newpass", password_confirmation: "newpass"}
+        expect(user.id).to eq(session[:user_id])
       end
     end
   end
