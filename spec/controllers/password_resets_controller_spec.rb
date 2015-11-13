@@ -41,4 +41,31 @@ RSpec.describe PasswordResetsController, type: :controller do
       end 
     end
   end
+  describe "GET edit" do 
+    context "with a valid password_reset_token" do
+      let(:user){create(:user)}
+      before {user.generate_password_reset_token!}
+
+      it "renders the edit template " do 
+        get :edit, id: user.password_reset_token
+        expect(response).to render_template('edit')
+      end
+
+      it "assigns a user instance variable" do
+        get :edit, id: user.password_reset_token
+        expect(assigns(:user)).to eq(user)
+      end
+    end
+
+    context "with no password_reset_token" do
+      let(:user){create(:user)}
+      before {user.generate_password_reset_token!}
+
+      it "renders the 404 page" do 
+        get :edit, id: ""
+        expect(response.status).to eq(404)
+        expect(response).to render_template(file: "#{Rails.root}/public/404.html")
+      end
+    end
+  end
 end
