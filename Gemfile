@@ -49,6 +49,7 @@ end
 
 group :test do
   gem 'capybara', '~> 2.5.0'
+  gem 'capybara-email'
   gem 'shoulda-matchers', '~> 2.8.0'
 end
 
