@@ -13,4 +13,10 @@ class UserSessionsController < ApplicationController
       flash[:error] = "There was a problem logging in. Please check your email and password."
     end
   end
+
+  def destroy
+    session[:user_id] = nil
+    flash[:success] = "Successfully Logged Out"
+    redirect_to login_path
+  end
 end
